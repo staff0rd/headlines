@@ -12,6 +12,7 @@ const serverlessConfiguration: Serverless = {
     webpack: {
       webpackConfig: "./webpack.config.js",
       includeModules: true,
+      excludeFiles: "src/**/*.test.ts",
     },
   },
   // Add the serverless-webpack plugin
@@ -26,8 +27,8 @@ const serverlessConfiguration: Serverless = {
     versionFunctions: false,
   },
   functions: {
-    hello: {
-      handler: "handler.hello",
+    parseFeed: {
+      handler: "src/parseFeed.handle",
       events: [
         {
           schedule: {

@@ -2,6 +2,7 @@ import { parseFeed } from "./parseFeed";
 
 describe("parseFeed", () => {
   it("should parse the feed", async () => {
-    await parseFeed();
+    const result = await parseFeed();
+    expect(result.items.length).toBeGreaterThan(0);
   });
 });
