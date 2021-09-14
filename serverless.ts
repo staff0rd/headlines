@@ -14,6 +14,7 @@ const serverlessConfiguration: Serverless = {
       includeModules: true,
       excludeFiles: "src/**/*.test.ts",
     },
+    bucketName: "headlines-${sls:stage}",
   },
   // Add the serverless-webpack plugin
   plugins: ["serverless-webpack"],
@@ -36,6 +37,16 @@ const serverlessConfiguration: Serverless = {
           },
         },
       ],
+    },
+  },
+  resources: {
+    Resources: {
+      Bucket: {
+        Type: "AWS::S3::Bucket",
+        Properties: {
+          BucketName: "${self:custom.bucketName}",
+        },
+      },
     },
   },
 };
