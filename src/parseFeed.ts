@@ -8,7 +8,9 @@ export const handle: ScheduledHandler = async () => {
 };
 
 export const parseFeed = async () => {
-  const feed = await new Parser().parseURL("https://www.reddit.com/.rss");
+  const feed = await new Parser().parseURL(
+    "http://feeds.bbci.co.uk/news/world/rss.xml"
+  );
   console.log(`Retreived ${feed.items.length} items from ${feed.title}`);
   return feed;
 };
