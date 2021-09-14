@@ -1,13 +1,9 @@
 import type { Serverless } from "serverless/aws";
 
 const serverlessConfiguration: Serverless = {
-  service: {
-    name: "headlines",
-    // app and org for use with dashboard.serverless.com
-    // app: your-app-name,
-    // org: your-org-name,
-  },
+  service: "headlines",
   frameworkVersion: "2",
+  configValidationMode: "error",
   custom: {
     webpack: {
       webpackConfig: "./webpack.config.js",
@@ -16,8 +12,7 @@ const serverlessConfiguration: Serverless = {
     },
     bucketName: "headlines-${sls:stage}",
   },
-  // Add the serverless-webpack plugin
-  plugins: ["serverless-webpack"],
+  plugins: ["serverless-webpack", "serverless-offline"],
   provider: {
     name: "aws",
     region: "us-west-2",
@@ -37,6 +32,9 @@ const serverlessConfiguration: Serverless = {
           },
         },
       ],
+      environment: {
+        BUCKET_NAME: "${self:custom.bucketName}",
+      },
     },
   },
   resources: {
