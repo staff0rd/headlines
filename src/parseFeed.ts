@@ -2,15 +2,18 @@ import { ScheduledHandler } from "aws-lambda";
 import Parser from "rss-parser";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
-const parser: Parser = new Parser();
+export const handle: ScheduledHandler = async () => {
+  const feed = await parseFeed();
+  await persist(feed);
+};
 
 export const parseFeed = async () => {
-  const feed = await parser.parseURL("https://www.reddit.com/.rss");
+  const feed = await new Parser().parseURL("https://www.reddit.com/.rss");
   console.log(`Retreived ${feed.items.length} items from ${feed.title}`);
   return feed;
 };
 
-export const persist = async (body: any) => {
+const persist = async (body: any) => {
   const date = new Date();
   const key = `${date.getFullYear()}/${
     date.getMonth() + 1
@@ -23,9 +26,4 @@ export const persist = async (body: any) => {
     })
   );
   console.log(`Saved ${key}`);
-};
-
-export const handle: ScheduledHandler = async (_event, _context) => {
-  const feed = await parseFeed();
-  await persist(feed);
 };
