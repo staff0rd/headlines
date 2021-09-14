@@ -2,6 +2,8 @@ import type { Serverless } from "serverless/aws";
 
 const serverlessConfiguration: Serverless = {
   service: "headlines",
+  app: "headlines",
+  org: "staff0rd",
   frameworkVersion: "2",
   configValidationMode: "error",
   custom: {

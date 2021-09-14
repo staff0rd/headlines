@@ -7,7 +7,7 @@ export const handle: ScheduledHandler = async () => {
   await persist(feed);
 };
 
-export const parseFeed = async () => {
+const parseFeed = async () => {
   const feed = await new Parser().parseURL(
     "http://feeds.bbci.co.uk/news/world/rss.xml"
   );
