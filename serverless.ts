@@ -2,8 +2,6 @@ import type { Serverless } from "serverless/aws";
 
 const serverlessConfiguration: Serverless = {
   service: "headlines",
-  app: "headlines",
-  org: "staff0rd",
   frameworkVersion: "2",
   configValidationMode: "error",
   custom: {
@@ -23,6 +21,17 @@ const serverlessConfiguration: Serverless = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
     },
     versionFunctions: false,
+    iam: {
+      role: {
+        statements: [
+          {
+            Effect: "Allow",
+            Action: ["s3:PutObject"],
+            Resource: "arn:aws:s3:::${self:custom.bucketName}/*",
+          },
+        ],
+      },
+    },
   },
   functions: {
     parseFeed: {
